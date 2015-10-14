@@ -64,18 +64,11 @@ module.exports = function (grunt) {
     }
   });
 
-  var webHash = null;
-  var getAzureDest = function () {
-    return webHash;
-  }
-    
-  // Task to copy static content to Azure Blob Storage
-  
+  // Task to copy static content to Azure Blob Storage  
   var storageSource = {
     expand: true,
     cwd: '<%= dirs.output.web %>',
-    src: ['**/*'],
-    dest: getAzureDest
+    src: ['**/*']
   };
 
   grunt.config('azure-blob', {
@@ -97,7 +90,7 @@ module.exports = function (grunt) {
   
   // Register custom "prep manifest" task
   grunt.task.registerMultiTask('prepManifest', 'Prep the manifest by updating base URI and publisher', function () {
-    webHash = hashFiles.sync({
+    var webHash = hashFiles.sync({
       files: [this.data.webOutput + "/**"]
     });
 
