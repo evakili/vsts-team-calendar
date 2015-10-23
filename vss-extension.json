@@ -21,6 +21,11 @@
     "categories": [
         "Collaboration"
     ],
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
     "content": {
         "details": {
             "path": "content/details.md"   

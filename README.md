@@ -40,3 +40,9 @@ The Team Calendar extension provides Visual Studio Online teams an integrated ca
 The Team Calendar extension is designed to be extended by other extensions. Other extensions can contribute new "event sources", which will be pulled from when the Team Calendar is rendered. Once you develop your extension, install it in the account that you installed the Team Calendar extension into.
 
 See the [public-events sample](https://github.com/Microsoft/vso-extension-samples/tree/master/public-events) for an example of an extension that contributes to the Team Calendar.
+
+## Building this sample
+This sample is implemented with TypeScript (http://typescriptlang.org). 
+
+If you would like to edit this sample, you can re-compile by running the following command from this directory (you will need the TypeScript compiler in your PATH):
+tsc -p .

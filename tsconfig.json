@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "module": "amd",
+        "target": "ES5",
+        "outDir": "out/scripts/Calendar"
+    },
+    "files": [
+        "scripts/Calendar/Extension.ts", 
+        "scripts/Calendar/EventSources/FreeFormEventsSource.ts", 
+        "scripts/Calendar/EventSources/VSOCapacityEventSource.ts",
+        "scripts/Calendar/EventSources/VSOIterationEventSource.ts"
+    ]
+}

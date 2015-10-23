@@ -1,6 +1,4 @@
-/// <reference path='../../typings/vss/VSS.d.ts' />
-/// <reference path='../../typings/fullCalendar/fullCalendar.d.ts' />
-/// <reference path='../../typings/moment/moment.d.ts' />
+/// <reference path='../../typings/tsd.d.ts' />
 
 import Calendar = require("Calendar/Calendar");
 import Calendar_Contracts = require("Calendar/Contracts");

@@ -1,3 +1,5 @@
+/// <reference path='../../typings/tsd.d.ts' />
+
 import Calendar_Views = require("Calendar/Views");
 
 $(() => {
