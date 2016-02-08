@@ -5,6 +5,8 @@
 import Calendar_Contracts = require("Calendar/Contracts");
 import Calendar_DateUtils = require("Calendar/Utils/Date");
 import Calendar_ColorUtils = require("Calendar/Utils/Color");
+import Calendar_InsightsUtils = require("Calendar/Utils/Insights");
+
 import Contracts_Platform = require("VSS/Common/Contracts/Platform");
 import Contributions_Contracts = require("VSS/Contributions/Contracts");
 import ExtensionManagement_RestClient = require("VSS/ExtensionManagement/RestClient");
@@ -60,6 +62,8 @@ export class FreeFormEventsSource implements Calendar_Contracts.IEventSource {
     }
 
     public addEvents(events: Calendar_Contracts.CalendarEvent[]): IPromise<Calendar_Contracts.CalendarEvent> {
+        Calendar_InsightsUtils.trackEvent("AddEvent");
+        
         var deferred = Q.defer();
         VSS.getService("ms.vss-web.data-service").then((extensionDataService: Services_ExtensionData.ExtensionDataService) => {
             extensionDataService.createDocument(this._teamId, events[0]).then(
