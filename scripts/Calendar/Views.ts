@@ -20,6 +20,7 @@ import WebApi_Constants = require("VSS/WebApi/Constants");
 import WebApi_Contracts = require("VSS/WebApi/Contracts");
 import Work_Client = require("TFS/Work/RestClient");
 import Work_Contracts = require("TFS/Work/Contracts");
+import Calendar_TelemetryUtils = require("Calendar/Utils/TelemetryService");
 
 function newElement(tag: string, className?: string, text?: string): JQuery {
     return $("<" + tag + "/>")
@@ -132,6 +133,8 @@ export class CalendarView extends Controls_Navigation.NavigationView {
         this._fetchIterationData().then((iterations: Work_Contracts.TeamSettingsIteration[]) => {
             this._iterations = iterations;
         });
+        
+        Calendar_TelemetryUtils.trackPageView();
     }
 
     private _isInIteration(date: Date): boolean {

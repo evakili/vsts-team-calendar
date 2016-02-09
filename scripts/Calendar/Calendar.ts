@@ -23,7 +23,6 @@ export interface SourceAndOptions {
 }
 
 export interface CalendarEventSource {
-
     (source: Calendar_Contracts.IEventSource, options: FullCalendar.EventSourceOptions): void;
 
     eventSource: Calendar_Contracts.IEventSource;

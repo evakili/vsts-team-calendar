@@ -4,7 +4,7 @@
 
 import Calendar_Contracts = require("Calendar/Contracts");
 import Calendar_DateUtils = require("Calendar/Utils/Date");
-import Calendar_InsightsUtils = require("Calendar/Utils/Insights");
+import Calendar_TelemetryUtils = require("Calendar/Utils/TelemetryService");
 
 import Q = require("q");
 import Service = require("VSS/Service");
@@ -138,7 +138,7 @@ export class VSOCapacityEventSource implements Calendar_Contracts.IEventSource {
             .getHttpClient(Work_Client.WorkHttpClient, WebApi_Constants.ServiceInstanceTypes.TFS);
         Calendar_DateUtils.getIterationId(dayOffStart).then((iterationId: string) => {
             if (isTeam) {
-                Calendar_InsightsUtils.trackEvent("AddTeamDayOff");
+                Calendar_TelemetryUtils.trackEvent("AddTeamDayOff");
                 
                 this._getTeamDaysOff(workClient, teamContext, iterationId).then((teamDaysOff: Work_Contracts.TeamSettingsDaysOff) => {
                     var teamDaysOffPatch: Work_Contracts.TeamSettingsDaysOffPatch = { daysOff: teamDaysOff.daysOff };
@@ -149,7 +149,7 @@ export class VSOCapacityEventSource implements Calendar_Contracts.IEventSource {
                 });
             }
             else {
-                Calendar_InsightsUtils.trackEvent("AddUserDayOff");
+                Calendar_TelemetryUtils.trackEvent("AddUserDayOff");
                 
                 this._getCapacity(workClient, teamContext, iterationId, memberId).then((capacity: Work_Contracts.TeamMemberCapacity) => {
                     var capacityPatch: Work_Contracts.CapacityPatch = {

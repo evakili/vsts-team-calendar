@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "team-calendar",
-    "version": "0.3.6",
+    "version": "0.4.4",
     "publisher": "willsmythe",
     "name": "Team Calendar",
     "description": "Track events important to your team, view and manage days off, quickly see when sprints start and end, and more.",
@@ -16,6 +16,11 @@
         "capacity",
         "awesomeness"
     ],
+    "eventCallbacks": {
+        "postInstall": {
+            "uri": "http://vsts-extension-telemetry-service.azurewebsites.net/event/da385b72-809f-4ad9-a56f-b46ca263d3c1"
+        }
+    },
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
@@ -55,6 +60,10 @@
         },
         {
             "path": "calendarServices.html",
+            "addressable": true
+        },
+        {
+            "path": "telemetryService.html",
             "addressable": true
         },
         {
@@ -124,7 +133,17 @@
             "properties": {
                 "uri": "calendarServices.html"
             }
-        }
+        },
+        {
+            "id": "telemetry-service",
+            "type": "ms.vss-web.service",
+            "description": "Telemetry service",
+            "targets": [ "ms.vss-web.services" ],
+            "properties": {
+                "uri": "telemetryService.html",
+                "instrumentationKey": "da385b72-809f-4ad9-a56f-b46ca263d3c1"
+            }
+        }        
     ],
     "contributionTypes": [
         {

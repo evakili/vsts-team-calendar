@@ -10,23 +10,6 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.js"></script>
-
-    <!--
-To collect end-user usage analytics about your application,
-insert the following script into each page you want to track.
-Place this code immediately before the closing </head> tag,
-and before any other scripts. Your first data will appear
-automatically in just a few seconds.
--->
-    <script type="text/javascript">
-        var appInsights=window.appInsights||function(config){
-            function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;for(s.src=config.url||"//az416426.vo.msecnd.net/scripts/a/ai.0.js",u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=["Event","Exception","Metric","PageView","Trace"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t
-        }({
-            instrumentationKey:"da385b72-809f-4ad9-a56f-b46ca263d3c1"
-        });
-        
-        window.appInsights=appInsights;
-    </script>
 </head>
 
 <body>
@@ -43,11 +26,7 @@ automatically in just a few seconds.
 
         // Wait for the SDK to be initialized
         VSS.ready(function () {            
-            window.appInsights.setAuthenticatedUserContext(VSS.getWebContext().user.id, VSS.getWebContext().collection.id);                       
-            window.appInsights.trackPageView();
-            
-            require(["Calendar/Extension"], function (items) { });
-                        
+            require(["Calendar/Extension"], function (ext) { });                        
             VSS.notifyLoadSucceeded();
         });
     </script>
