@@ -1,8 +1,10 @@
+import Calendar_TelemetryUtils = require("Calendar/Utils/Telemetry");
+
 /**
 * Interface for a calendar event provider
 */
 export interface IEventSource {
-
+    
     /**
     * Unique id of the event source
     */
@@ -54,6 +56,11 @@ export interface IEventSource {
     * Forms the url which is linked to the title of the summary section for the source
     */
     getTitleUrl(webContext: WebContext): IPromise<string>;
+    
+    /**
+     * Set telemetry helper
+     */
+    setTelemetryHelper?(helper: Calendar_TelemetryUtils.TelemetryHelper);
 }
 
 /**

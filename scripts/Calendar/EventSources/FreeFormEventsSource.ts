@@ -5,7 +5,7 @@
 import Calendar_Contracts = require("Calendar/Contracts");
 import Calendar_DateUtils = require("Calendar/Utils/Date");
 import Calendar_ColorUtils = require("Calendar/Utils/Color");
-import Calendar_TelemetryUtils = require("Calendar/Utils/TelemetryService");
+import Calendar_TelemetryUtils = require("Calendar/Utils/Telemetry");
 
 import Contracts_Platform = require("VSS/Common/Contracts/Platform");
 import Contributions_Contracts = require("VSS/Contributions/Contracts");
@@ -25,6 +25,8 @@ export class FreeFormEventsSource implements Calendar_Contracts.IEventSource {
 
     private _teamId: string;
     private _events: Calendar_Contracts.CalendarEvent[];
+    
+    private _telemetryHelper: Calendar_TelemetryUtils.TelemetryHelper;
 
     constructor() {
         var webContext = VSS.getWebContext();
@@ -69,7 +71,7 @@ export class FreeFormEventsSource implements Calendar_Contracts.IEventSource {
                 (addedEvent: Calendar_Contracts.CalendarEvent) => {
                     this._events.push(addedEvent);
                     
-                    Calendar_TelemetryUtils.trackEvent("AddFreeFormEvent", {  id: addedEvent.id } );
+                    Calendar_TelemetryUtils.TelemetryHelper.trackEvent("AddFreeFormEvent", {  eventId: addedEvent.id,  } );
                     
                     deferred.resolve(addedEvent);
                 },
@@ -163,5 +165,9 @@ export class FreeFormEventsSource implements Calendar_Contracts.IEventSource {
         });
 
         return categories;
+    }
+    
+    public setTelemetryHelper(helper: Calendar_TelemetryUtils.TelemetryHelper) {
+        this._telemetryHelper = helper;
     }
 }

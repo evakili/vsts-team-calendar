@@ -4,7 +4,7 @@
 
 import Calendar_Contracts = require("Calendar/Contracts");
 import Calendar_DateUtils = require("Calendar/Utils/Date");
-import Calendar_TelemetryUtils = require("Calendar/Utils/TelemetryService");
+import Calendar_TelemetryUtils = require("Calendar/Utils/Telemetry");
 
 import Q = require("q");
 import Service = require("VSS/Service");
@@ -22,7 +22,8 @@ export class VSOCapacityEventSource implements Calendar_Contracts.IEventSource {
     public name = "Days off";
     public order = 30;
     private _events: Calendar_Contracts.CalendarEvent[];
-
+    
+    private _telemetryHelper: Calendar_TelemetryUtils.TelemetryHelper;    
 
     public getEvents(query?: Calendar_Contracts.IEventQuery): IPromise<Calendar_Contracts.CalendarEvent[]> {
 
@@ -138,7 +139,7 @@ export class VSOCapacityEventSource implements Calendar_Contracts.IEventSource {
             .getHttpClient(Work_Client.WorkHttpClient, WebApi_Constants.ServiceInstanceTypes.TFS);
         Calendar_DateUtils.getIterationId(dayOffStart).then((iterationId: string) => {
             if (isTeam) {
-                Calendar_TelemetryUtils.trackEvent("AddTeamDayOff");
+               Calendar_TelemetryUtils.TelemetryHelper.trackEvent("AddTeamDayOff");
                 
                 this._getTeamDaysOff(workClient, teamContext, iterationId).then((teamDaysOff: Work_Contracts.TeamSettingsDaysOff) => {
                     var teamDaysOffPatch: Work_Contracts.TeamSettingsDaysOffPatch = { daysOff: teamDaysOff.daysOff };
@@ -149,7 +150,7 @@ export class VSOCapacityEventSource implements Calendar_Contracts.IEventSource {
                 });
             }
             else {
-                Calendar_TelemetryUtils.trackEvent("AddUserDayOff");
+                Calendar_TelemetryUtils.TelemetryHelper.trackEvent("AddUserDayOff");
                 
                 this._getCapacity(workClient, teamContext, iterationId, memberId).then((capacity: Work_Contracts.TeamMemberCapacity) => {
                     var capacityPatch: Work_Contracts.CapacityPatch = {
@@ -346,7 +347,10 @@ export class VSOCapacityEventSource implements Calendar_Contracts.IEventSource {
     private _buildTeamImageUrl(hostUri: string, id: string): string {
         return Utils_String.format("{0}_api/_common/IdentityImage?id={1}", hostUri, id);
     }
-
+            
+    public setTelemetryHelper(helper: Calendar_TelemetryUtils.TelemetryHelper) {
+        this._telemetryHelper = helper;
+    }
 }
 
 export class IdentityHelper {
@@ -415,4 +419,5 @@ export class IdentityHelper {
         }
         return displayName;
     }
+
 }

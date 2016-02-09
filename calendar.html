@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Calendar Extension</title>
+    <title>Team Calendar Extension</title>
     <script src="sdk/scripts/VSS.SDK.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.css" />
     <link rel="stylesheet" href="css/site.css" />
@@ -26,8 +26,9 @@
 
         // Wait for the SDK to be initialized
         VSS.ready(function () {            
-            require(["Calendar/Extension"], function (ext) { });                        
-            VSS.notifyLoadSucceeded();
+            require(["Calendar/Extension"], function (ext) {
+                VSS.notifyLoadSucceeded();                                
+            });            
         });
     </script>
 

@@ -20,7 +20,7 @@ import WebApi_Constants = require("VSS/WebApi/Constants");
 import WebApi_Contracts = require("VSS/WebApi/Contracts");
 import Work_Client = require("TFS/Work/RestClient");
 import Work_Contracts = require("TFS/Work/Contracts");
-import Calendar_TelemetryUtils = require("Calendar/Utils/TelemetryService");
+import Calendar_TelemetryUtils = require("Calendar/Utils/Telemetry");
 
 function newElement(tag: string, className?: string, text?: string): JQuery {
     return $("<" + tag + "/>")
@@ -53,8 +53,8 @@ export class EventSourceCollection {
         if (!this._deferred) {
             this._deferred = Q.defer();
             var extensionContext = VSS.getExtensionContext();
-            var eventSourcesTargetId = extensionContext.publisherId + "." + extensionContext.extensionId + ".calendar-event-sources";
-            VSS.getServiceContributions(eventSourcesTargetId).then((contributions) => {
+            var eventSourcesTargetId = extensionContext.publisherId + "." + extensionContext.extensionId + ".calendar-event-sources";                        
+            VSS.getServiceContributions(eventSourcesTargetId).then((contributions) => {                
                 var servicePromises = $.map(contributions, contribution => contribution.getInstance(contribution.id));
                 Q.allSettled(servicePromises).then((promiseStates) => {
                     var services = [];
@@ -88,11 +88,17 @@ export class CalendarView extends Controls_Navigation.NavigationView {
     private _defaultEvents: FullCalendar.EventObject[];
     private _calendarEventSourceMap: { [sourceId: string]: Calendar.CalendarEventSource; } = {};
     private _iterations: Work_Contracts.TeamSettingsIteration[];
+    
+    private _telemetryHelper: Calendar_TelemetryUtils.TelemetryHelper;
 
     constructor(options: CalendarViewOptions) {
         super(options);
         this._eventSources = new EventSourceCollection([]);
         this._defaultEvents = options.defaultEvents || [];
+                
+        // Initialize telemetry helper                
+        var extensionContext = VSS.getExtensionContext();
+        this._telemetryHelper = new Calendar_TelemetryUtils.TelemetryHelper(extensionContext.publisherId + "." + extensionContext.extensionId + "." + "calendar-telemetry-service");
     }
 
     public initialize() {
@@ -134,8 +140,8 @@ export class CalendarView extends Controls_Navigation.NavigationView {
             this._iterations = iterations;
         });
         
-        Calendar_TelemetryUtils.trackPageView();
-    }
+        this._telemetryHelper.trackPageView();
+    }   
 
     private _isInIteration(date: Date): boolean {
         return this._iterations.some((iteration: Work_Contracts.TeamSettingsIteration, index: number, array: Work_Contracts.TeamSettingsIteration[]) => {
