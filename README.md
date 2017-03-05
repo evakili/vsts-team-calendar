@@ -1,46 +1,62 @@
-![build](https://mseng.visualstudio.com/DefaultCollection/_apis/public/build/definitions/b924d696-3eae-4116-8443-9a18392d8544/2715/badge?branchName=master)
+# Team Calendar Extension for Team Services
 
-# Team Calendar Extension for Visual Studio Team Services
+![buildstatus](https://mseng.visualstudio.com/_apis/public/build/definitions/b924d696-3eae-4116-8443-9a18392d8544/2715/badge)
 
-Team Calendar helps busy teams stay on track and informed about important deadlines, sprint schedules, and upcoming milestones. Team Calendar is the one place to see and manage the date important to your teams, including sprint schedule, days off (for individuals or the team), and custom events.
+Team Calendar helps busy teams stay on track and informed about important deadlines, sprint schedules, and upcoming milestones. It is the one place to see and manage the date important to your teams, including sprint schedule, days off (for individuals or the team), and custom events.
 
-The Team Calendar extension provides Visual Studio Online teams an integrated calendar view in web access:
+Team Calendar installs into either a Visual Studio Team Services account or into Team Foundation Server.
 
-![screenshot](images/calendar-screen-shot.png)
+![screenshot](static/images/calendar-screen-shot.png)
 
-See [overview](overview.md) to learn more about the features of this extension.
+See [overview](overview.md) to learn more about the features of the extension.
 
 ## About extensions
 
-Extensions enable you to create first-class integration experiences within Visual Studio Online, just the way you have always wanted. An extension can be a simple context menu or toolbar action or can be a complex and powerful custom UI experience that light up within the account, collection, or project hubs. 
+Extensions enable you to create first-class integration experiences within Visual Studio Team Services, just the way you have always wanted. An extension can be a simple context menu or toolbar action or can be a complex and powerful custom UI experience that light up within the account, collection, or project hubs. 
 
-To learn more about Extensions, see the [overview of extensions](https://www.visualstudio.com/en-us/integrate/extensions/overview).
+To learn more about Extensions, see the [overview of extensions](https://www.visualstudio.com/docs/integrate/extensions/overview).
 
-## Developing
+## Install
+
+To try out the extension in your Team Services account, visit the [Team Calendar extension](https://marketplace.visualstudio.com/items?itemName=ms-devlabs.team-calendar) page on the Visual Studio Marketplace.
+
+Don't have a [free] Team Services account? [Learn more](https://www.visualstudio.com/team-services/) about getting one.
+
+## Develop
  
-Team Calendar compiles as optimized, minified packages using tsproject, requirejs, and gulp.
+Team Calendar is written in [TypeScript](https://www.typescriptlang.org/). To build and package the extension:
 
-To setup:
+### Get the pre-reqs
 
-```
-npm i -g tsproject
-npm i -g gulp
-npm update
-```
+1. Get [Node.js](https://nodejs.org/)
+2. Install TypeScript: `npm install -g typescript`
+3. Install the Team Services CLI (needed to package the extension): `npm install -g tfx-cli`
+4. Install required modules: `npm install` (from the root of t
 
-Then to compile and bundle, run:
+### Compile the code
 
-```
-gulp build
-```
-
-To package so you can test in your Visual Studio Team Services account, install the [Team Services CLI](https://github.com/Microsoft/tfs-cli) and run:
+To compile and package the extension run:
 
 ```
-tfx extension create --publisher myPublisherId
+npm run build
 ```
 
-## How to add custom event sources
+This will compile the TypeScript code in the project and create a .vsix file.
+   
+### Package the extension
+
+To install your own version of the Team Calendar extension into your Team Services account, you need to create a publisher on the Visual Studio Marketplace. There is no cost for creating or having a publisher. [Learn how to create a publisher](https://www.visualstudio.com/docs/integrate/extensions/publish/overview).
+
+1. Update your version of the extension manifest (`vss-extension.json`) file:
+   1. Set the `publisher` property to your Visual Studio Marketplace publisher ID 
+   2. Set the `public` property to `false`
+2. Package the extension (`npm run build`) to produce a .vsix file. Note: you should see your publisher ID in the name of this file.
+3. Go to the [manage](https://marketplace.visualstudio.com/manage) page of the Marketplace and click **Upload** to publish your version of the extension (don't worry, only you will be able to see it)
+5. After uploading, select the extension, click **Share** ,and enter the name of the Team Services account you want to be able to install the extension into
+6. Click the extension's title to open its details page
+7. Click the install button, choose your account from the drop-down, and install the extension
+
+## Add custom event sources (advanced)
 
 The Team Calendar extension is designed to be extended by other extensions. Other extensions can contribute new "event sources", which will be pulled from when the Team Calendar is rendered. Once you develop your extension, install it in the account that you installed the Team Calendar extension into.
 

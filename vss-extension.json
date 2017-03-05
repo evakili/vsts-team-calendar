@@ -1,85 +1,73 @@
 {
     "manifestVersion": 1,
     "id": "team-calendar",
-    "version": "0.4.3",
+    "version": "0.5.0",
     "publisher": "ms-devlabs",
     "name": "Team Calendar",
     "description": "Track events important to your team, view and manage days off, quickly see when sprints start and end, and more.",
     "public": true,
     "icons": {
-        "default": "images/calendar-logo.png"
+        "default": "static/images/calendar-logo.png"
     },
     "tags": [
         "plan",
         "time",
         "calendar",
-        "capacity",
-        "awesomeness"
+        "capacity"
     ],
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
-        }  
+        }
     ],
     "scopes": [
-        "vso.work_write"  
+        "vso.work_write"
     ],
     "categories": [
         "Plan and track"
     ],
     "content": {
         "details": {
-            "path": "overview.md"   
+            "path": "overview.md"
         },
         "license": {
             "path": "LICENSE.txt"
         }
     },
+    "links": {
+        "support": {
+            "uri": "https://github.com/Microsoft/vsts-team-calendar/issues"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Microsoft/vsts-team-calendar"
+    },
+    "badges": [
+        {
+            "href": "https://github.com/Microsoft/vsts-team-calendar",
+            "uri": "https://mseng.visualstudio.com/_apis/public/build/definitions/b924d696-3eae-4116-8443-9a18392d8544/2715/badge",
+            "description": "Team Calendar CI build status"
+        }
+    ],
     "screenshots": [
         {
-            "path": "images/calendar-screen-shot.png"
-        }              
+            "path": "static/images/calendar-screen-shot.png"
+        }
     ],
     "files": [
         {
-            "path": "images",
+            "path": "static",
             "addressable": true
         },
         {
-            "path": "css",
-            "addressable": true
-        },  
-        {
-            "path": "fonts",
-            "addressable": true
-        },  
-        {
-            "path": "js",
-            "addressable": true
-        },  
-        {
-            "path": "calendar.html",
-            "addressable": true
-        },              
-        {
-            "path": "calendarServices.html",
+            "path": "dist",
             "addressable": true
         },
         {
-            "path": "freeFormControls.html",
-            "addressable": true  
-        },
-        {
-            "path": "daysOffControls.html",
-            "addressable": true  
-        },                
-        {
-            "path": "built/min",
-            "addressable": true
-        },              
-        {
-            "path": "sdk",
-            "addressable": true
+            "path": "node_modules/vss-web-extension-sdk/lib",
+            "addressable": true,
+            "packagePath": "dist/vss-web-extension-sdk"
         }
     ],
     "branding": {
@@ -97,7 +85,7 @@
             "properties": {
                 "name": "Calendar",
                 "order": 22,
-                "uri": "calendar.html"
+                "uri": "static/calendar.html"
             }
         },
         {
@@ -116,7 +104,7 @@
                 ".calendar-event-sources"
             ],
             "properties": {
-                "uri": "calendarServices.html"
+                "uri": "static/calendarServices.html"
             }
         },
         {
@@ -127,7 +115,7 @@
                 ".calendar"
             ],
             "properties": {
-                "uri": "freeFormControls.html"
+                "uri": "static/freeFormControls.html"
             }
         },
         {
@@ -138,7 +126,7 @@
                 ".calendar-event-sources"
             ],
             "properties": {
-                "uri": "calendarServices.html"
+                "uri": "static/calendarServices.html"
             }
         },
         {
@@ -149,7 +137,7 @@
                 ".calendar"
             ],
             "properties": {
-                "uri": "daysOffControls.html"
+                "uri": "static/daysOffControls.html"
             }
         },
         {
@@ -160,7 +148,7 @@
                 ".calendar-event-sources"
             ],
             "properties": {
-                "uri": "calendarServices.html"
+                "uri": "static/calendarServices.html"
             }
         }
     ],
@@ -181,5 +169,6 @@
                     "required": true
                 }
             }
-        }]
+        }
+    ]
 }
